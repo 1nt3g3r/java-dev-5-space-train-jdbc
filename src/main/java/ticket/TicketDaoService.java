@@ -42,7 +42,7 @@ public class TicketDaoService {
             try(ResultSet rs = getMaxIdSt.executeQuery()) {
                 rs.next();
 
-                return rs.getLong("cnt");
+                return rs.getLong("maxId");
             }
         });
 
