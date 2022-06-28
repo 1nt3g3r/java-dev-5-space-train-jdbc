@@ -1,9 +1,11 @@
 package ticket;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -57,5 +59,18 @@ public class TicketDaoService {
 
             return rs.getLong("cnt");
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        File img = new File("/home/integer/example.webp");
+        InputStream bis = new FileInputStream(img);
+
+        byte[] allBytes = bis.readAllBytes();
+
+        String encoded = Base64.getEncoder().encodeToString(allBytes);
+
+        byte[] bytes = Base64.getDecoder().decode(encoded);
+
+        System.out.println("encoded = " + encoded);
     }
 }
