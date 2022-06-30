@@ -6,7 +6,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import passenger.Passenger;
+import storage.DatabaseInitService;
+import tests.Person;
+import ticket.Ticket;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class HibernateUtil {
@@ -22,6 +26,8 @@ public class HibernateUtil {
     private HibernateUtil() {
         sessionFactory = new Configuration()
                 .addAnnotatedClass(Passenger.class)
+                .addAnnotatedClass(Ticket.class)
+                .addAnnotatedClass(Person.class)
                 .buildSessionFactory();
     }
 
@@ -34,6 +40,9 @@ public class HibernateUtil {
     }
 
     public static void main(String[] args) {
+        //Init DB using flyway
+        new DatabaseInitService().initDb();
+
         HibernateUtil util = HibernateUtil.getInstance();
 
         //Get single
@@ -68,5 +77,24 @@ public class HibernateUtil {
 //                session.persist(existing);
 //            transaction.commit();
 //        session.close();
+
+        //List all tickets
+//        Session session = util.getSessionFactory().openSession();
+//        List<Ticket> tickets = session.createQuery("from Ticket", Ticket.class).list();
+//        System.out.println("tickets = " + tickets);
+//        session.close();
+
+//        Session session = util.getSessionFactory().openSession();
+//            Transaction transaction = session.beginTransaction();
+//                Person p = new Person();
+//                p.setAddressList(Arrays.asList("address1", "address2"));
+//                session.persist(p);
+//            transaction.commit();
+//        session.close();
+
+        Session session = util.getSessionFactory().openSession();
+        List<Person> persons = session.createQuery("from Person", Person.class).list();
+        System.out.println("persons = " + persons);
+        session.close();
     }
 }

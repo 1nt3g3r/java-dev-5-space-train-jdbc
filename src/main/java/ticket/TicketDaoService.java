@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class TicketDaoService {
+public class TicketDaoService implements ITicketDaoService {
     private PreparedStatement createSt;
     private PreparedStatement getMaxIdSt;
     private PreparedStatement getTicketCountToPlanetSt;

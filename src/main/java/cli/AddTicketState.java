@@ -1,10 +1,9 @@
 package cli;
 
+import passenger.HibernatePassengerDaoService;
+import passenger.IPassengerDaoService;
 import passenger.Passenger;
-import passenger.PassengerDaoService;
-import ticket.Planet;
-import ticket.Ticket;
-import ticket.TicketDaoService;
+import ticket.*;
 
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
@@ -17,8 +16,7 @@ public class AddTicketState extends CliState {
     @Override
     public void init() {
         try {
-            PassengerDaoService passengerDaoService =
-                    new PassengerDaoService(fsm.getConnectionProvider().createConnection());
+            IPassengerDaoService passengerDaoService = new HibernatePassengerDaoService();
 
             System.out.println("Enter passenger passport:");
             String passport = fsm.getScanner().nextLine();
@@ -48,7 +46,7 @@ public class AddTicketState extends CliState {
 
             Planet to = new PlanetChooser(fsm.getScanner()).ask();
 
-            TicketDaoService ticketDaoService = new TicketDaoService(fsm.getConnectionProvider().createConnection());
+            ITicketDaoService ticketDaoService = new HibernateTicketDaoService();
 
             Ticket ticket = new Ticket();
             ticket.setPassengerId(passenger.getId());

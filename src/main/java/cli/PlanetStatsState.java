@@ -1,8 +1,6 @@
 package cli;
 
-import ticket.Planet;
-import ticket.Ticket;
-import ticket.TicketDaoService;
+import ticket.*;
 
 import java.sql.SQLException;
 
@@ -18,7 +16,7 @@ public class PlanetStatsState extends CliState {
         Planet planet = new PlanetChooser(fsm.getScanner()).ask();
 
         try {
-            TicketDaoService ticketDaoService = new TicketDaoService(fsm.getConnectionProvider().createConnection());
+            ITicketDaoService ticketDaoService = new HibernateTicketDaoService();
             long ticketCount = ticketDaoService.getTicketCountToPlanet(planet);
             System.out.println(planet + " found. Ticket count: " + ticketCount);
 
